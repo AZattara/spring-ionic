@@ -24,7 +24,7 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository repo;
 	
-	public Categoria buscar(Integer id) {
+	public Categoria find(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 		"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
@@ -36,13 +36,13 @@ public class CategoriaService {
 	}	
 
 	public Categoria update(Categoria obj) {
-		Categoria newObj = buscar(obj.getId());
+		Categoria newObj = find(obj.getId());
 		updateData(newObj, obj);
 		return repo.save(newObj);
 	}	
 
 	public void delete(Integer id) {
-		buscar(id);
+		find(id);
 		try {
 			repo.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
